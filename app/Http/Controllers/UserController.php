@@ -64,4 +64,25 @@ class UserController extends Controller
              ], 500);
          }
      }
+       // ✅ User Logout
+    public function logout(Request $request)
+    {
+        try{
+            if (!Auth::check()) {
+                return response()->json([
+                    'message' => 'Unauthorized'
+                ], 401);
+            }else{
+                $request->user()->tokens()->delete();
+                return response()->json([
+                    'message' => 'User logged out successfully'
+                ], 200);
+            }
+
+        }catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
