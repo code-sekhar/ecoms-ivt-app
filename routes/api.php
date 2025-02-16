@@ -22,5 +22,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Only admin can access this route
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    Route::post('/addbrand', [BrandController::class, 'addBrand']);
+    Route::post('/admin/addbrand', [BrandController::class, 'addBrand']);
+    Route::post('/admin/updatebrand/{id}', [BrandController::class, 'updateBrand']);
+    Route::delete('/admin/deletebrand/{id}', [BrandController::class, 'deleteBrand']);
 });
+
+//all users can access this route
+Route::get('/brands', [BrandController::class, 'getAllBrands']);
+Route::get('/brand/{id}', [BrandController::class, 'getBrand']);
