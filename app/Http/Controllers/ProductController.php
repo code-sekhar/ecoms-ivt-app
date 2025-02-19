@@ -150,4 +150,32 @@ class ProductController extends Controller
             ], 500);
         }
     }
+    public function deleteProduct($id) {
+        try {
+            $product = Product::find($id);
+            if (!$product) {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
+            // Delete Old Images (assuming 'images' is a JSON array in DB)
+            if ($product->image) {
+                $images = json_decode($product->image, true); // Decode JSON to array
+                foreach ($images as $image) {
+                    $imagePath = public_path($image);
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
+            }
+
+            $product->delete();
+
+            return response()->json([
+                'message' => 'Product and associated images deleted successfully'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 Route::middleware(['auth:sanctum', 'seller'])->group(function () {
     Route::post('/seller/addproduct', [ProductController::class, 'store']);
     Route::post('/seller/updateproduct/{id}', [ProductController::class, 'updateProduct']);
+    Route::delete('/seller/deleteproduct/{id}', [ProductController::class, 'deleteProduct']);
 
 });
 //all users can access this route
