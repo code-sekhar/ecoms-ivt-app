@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('sub_description');
             $table->decimal('price', 10, 2);
-            $table->string('image');
+            $table->json('image'); // Multiple images as JSON
             $table->integer('stock')->default(0);
             $table->timestamps();
 
