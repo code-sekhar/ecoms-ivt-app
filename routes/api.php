@@ -7,6 +7,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -20,6 +21,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/addprofile', [UserProfileController::class, 'addProfile']);
     Route::post('/updateprofile', [UserProfileController::class, 'updateProfile']);
     Route::post('/logout', [UserController::class, 'logout']);
+
+    //Cart
+    Route::post('/addcart', [CartController::class, 'addCart']);
 });
 
 //Only admin can access this route

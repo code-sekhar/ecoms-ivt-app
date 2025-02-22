@@ -22,18 +22,23 @@ class CartController extends Controller
             if($cartItem){
                 $cartItem->quantity += $request->quantity;
                 $cartItem->save();
+                return response()->json([
+                    'message' => 'Cart updated successfully',
+                    'cart' => $cartItem
+                ]);
             }else{
                 $cart = carts::create([
                     'user_id' => $authUser->id,
                     'product_id' => $request->product_id,
                     'quantity' => $request->quantity,
                 ]);
+                return response()->json([
+                    'message' => 'Cart added successfully',
+                    'cart' => $cart,
+                ], 201);
             }
 
-            return response()->json([
-                'message' => 'Cart added successfully',
-                'cart' => $cart,
-            ], 201);
+
         }catch(Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
