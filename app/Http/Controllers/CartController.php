@@ -59,4 +59,55 @@ class CartController extends Controller
             ], 500);
         }
     }
+     //update Cart
+     public function updateCart(Request $request, $id){
+        try{
+            $request->validate([
+                'quantity' => 'required|integer|min:1',
+            ]);
+            $authUser = Auth::user();
+            $cart = carts::where('user_id', $authUser->id)->where('id', $id)->first();
+            //$cart = carts::findOrFail($id);
+            $cart->quantity = $request->quantity;
+            $cart->save();
+            return response()->json([
+                'message' => 'Cart updated successfully',
+                'cart' => $cart,
+            ], 200);
+        }catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    //remove Cart
+    public function removeCart($id){
+        try{
+            $authUser = Auth::user();
+            $cart = carts::where('user_id', $authUser->id)->where('id', $id)->first();
+            //$cart = carts::findOrFail($id);
+            $cart->delete();
+            return response()->json([
+                'message' => 'Cart removed successfully',
+            ], 200);
+        }catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    //Clear
+    public function clearCart(){
+        try{
+            $authUser = Auth::user();
+            $carts = carts::where('user_id', $authUser->id)->delete();
+            return response()->json([
+                'message' => 'Cart cleared successfully',
+            ], 200);
+        }catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

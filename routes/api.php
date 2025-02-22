@@ -24,6 +24,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Cart
     Route::post('/addcart', [CartController::class, 'addCart']);
+    Route::get('/viewcart', [CartController::class, 'viewCart']);
+    Route::post('/updatecart/{id}', [CartController::class, 'updateCart']);
+    Route::delete('/removecart/{id}', [CartController::class, 'removeCart']);
+    Route::get('/clearcart', [CartController::class, 'clearCart']);
 });
 
 //Only admin can access this route
