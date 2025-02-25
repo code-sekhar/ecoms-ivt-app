@@ -13,5 +13,10 @@ class Product extends Model
         'image' => 'array', // JSON থেকে Array-এ রূপান্তর
     ];
 
-
+    public function orders()
+    {
+        return $this->belongsToMany(orders::class, 'order_product')
+                    ->withPivot('quantity', 'price')
+                    ->withTimestamps();
+    }
 }
